@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package chord;
+
+// Mensajes
+message StoreRequest {
+  bytes value = 1;
+}
+
+message StoreResponse {
+  bytes key = 1;
+}
+
+message GetRequest {
+  bytes key = 1;
+}
+
+message GetResponse {
+  bytes value = 1;
+}
+
+message FindSuccessorRequest {
+  bytes id = 1;
+}
+
+message FindSuccessorResponse {
+  Node node = 1;
+}
+
+// Mensaje que describe un nodo en la red Chord
+message Node {
+  string ip = 1;
+  int32 port = 2;
+}
+
+// Servicios
+service ChordService {
+  rpc Store(StoreRequest) returns (StoreResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc FindSuccessor(FindSuccessorRequest) returns (FindSuccessorResponse);
+  // Otros métodos como Notify, UpdateFingerTable, etc.
+}
