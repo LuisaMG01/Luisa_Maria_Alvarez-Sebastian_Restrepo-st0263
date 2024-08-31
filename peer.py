@@ -6,7 +6,7 @@ import sys
 from src.chord_dht.node import Node
 from src.chord_dht.chord_client import ChordClient
 from src.chord_dht.chord_services import ChordServicer, leave_network
-from .config import SOURCE_ADDRESS, TARGET_ADDRESS, NODE_ID
+from .config import SOURCE_ADDRESS, TARGET_ADDRESS, NODE_ID, PORT
 
 def run_menu(node):
     client = ChordClient(node.address)
@@ -35,7 +35,7 @@ def run_menu(node):
 def serve(node):
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     chord_pb2_grpc.add_ChordServiceServicer_to_server(ChordServicer(node), server)
-    server.add_insecure_port(node.address)
+    server.add_insecure_port(PORT)
     server.start()
     print(f"Server started on {node.address}")
     
