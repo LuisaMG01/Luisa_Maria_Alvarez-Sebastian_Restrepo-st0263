@@ -6,6 +6,7 @@ import sys
 from src.chord_dht.node import Node
 from src.chord_dht.chord_client import ChordClient
 from src.chord_dht.chord_services import ChordServicer, leave_network
+from .config import SOURCE_ADDRESS, TARGET_ADDRESS, NODE_ID
 
 def run_menu(node):
     client = ChordClient(node.address)
@@ -49,13 +50,10 @@ def serve(node):
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) != 4:
-        print("Usage: python chord_server.py <node_id> <ip:port_this_node> <ip:port_other_node>")
-        sys.exit(1)
 
-    node_id = int(sys.argv[1])
-    address_this_node = sys.argv[2]  
-    address_other_node = sys.argv[3]  
+    node_id = NODE_ID
+    address_this_node = SOURCE_ADDRESS  
+    address_other_node = TARGET_ADDRESS  
 
     node = Node(node_id, address_this_node)
 
