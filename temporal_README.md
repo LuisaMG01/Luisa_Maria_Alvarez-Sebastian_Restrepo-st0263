@@ -158,15 +158,33 @@ Ejemplos:
 
 En caso de preferir usar Docker:
 
-1. Construye la imagen:
+1. Actualización dee la lista de paquetes e instalación las actualizaciones disponibles:
    ```
-  docker build -t chord-node .
-  ```
+   sudo apt-get update
+   sudo apt-get upgrade -y
+   ```
+2. Instalación de Docker:
+   ```
+   sudo apt-get install -y docker.io
+   ```
+3. Habilitar y arrancar el servidor Docker:
+   ```
+   sudo systemctl enable docker
+   sudo systemctl start docker
+   ```
 
-2. Ejecuta un contenedor:
+Para los pasos siguientes es necesario ajustar los parámetros del archivo config.py, llenando los campos para poder asignar de manera estática los valores de la etructura nodo en cada caso.
+
+4. Creación de la imagen del archivo Dockerfile.
+
   ```
-  docker run -p 50051:50051 chord-node python server.py 0 0.0.0.0:50051 none
-  ```
+   docker build -t <nombre-de-la-imagen> .
+   ```
+5. Creación del contenedor en el que correrá la imagen para cada nodo.
+
+   ```
+   sudo docker run -it -p <puerto-máquina-anfitriona>:<puerto-contenedor-docker> <nombre-de-la-imagen>
+   ```
 
 Para nodos adicionales, ajusta el puerto mapeado y los parámetros según sea necesario.
 
