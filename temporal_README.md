@@ -380,6 +380,11 @@ peer.py
 ## una mini guia de como un usuario utilizaría el software o la aplicación
 
 ## opcionalmente - si quiere mostrar resultados o pantallazos 
+### Demostracion AWS
+![image](https://github.com/user-attachments/assets/6a1bb50e-7e43-4469-b452-841f5d163590)
+![image](https://github.com/user-attachments/assets/1a4fb743-efaf-4060-a576-8a875d34212c)
+![image](https://github.com/user-attachments/assets/f6f02046-fc27-4b28-8104-b5037a96d5b8)
+
 
 # 5. otra información que considere relevante para esta actividad.
 
