@@ -61,6 +61,12 @@ Para el presente reto se implemento una red P2P mediante el protocolo Chord DHT.
 
 ## 1.2. Que aspectos NO cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
+Uno de los aspectos que no se implementó en la entrega del proyecto se refiere al almacenamiento de archivos en carpetas físicas dentro del sistema. En particular, se esperaba que la implementación permitiera que los archivos almacenados por cada nodo se gestionaran en directorios específicos en el sistema de archivos.
+
+El objetivo era permitir que cada nodo tuviera su propio directorio físico para los archivos que almacena, facilitando así la organización y el acceso a dichos archivos a nivel del sistema operativo. Sin embargo, esta funcionalidad no se desarrolló en la medida esperada debido a la complejidad que implica modificar la estructura de almacenamiento a nivel de código para manejar directorios físicos.
+
+La principal dificultad radica en la integración de la gestión de archivos en carpetas dentro del marco del sistema distribuido, lo que requirió un esfuerzo significativo en términos de diseño y programación. La falta de esta implementación limita la capacidad de organizar y acceder a los archivos de manera más estructurada y puede afectar la facilidad de mantenimiento y la eficiencia en el manejo de datos en el proyecto.
+
 ## 2. Información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
 
 #### Arquitectura DHT
@@ -315,10 +321,59 @@ Este servidor Chord implementa una red distribuida utilizando el protocolo gRPC 
 - **Respuestas**:
     - `Empty` : Confirmación de que la información ha sido actualizada.
 
-## detalles técnicos
-## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
-## opcional - detalles de la organización del código por carpetas o descripción de algún archivo. (ESTRUCTURA DE DIRECTORIOS Y ARCHIVOS IMPORTANTE DEL PROYECTO, comando 'tree' de linux)
+## Detalles técnicos
 
+### Arquitectura del Sistema
+El sistema P2P basado en Chord con DHT se organiza en una red distribuida donde los nodos colaboran para almacenar y recuperar datos de manera eficiente. Cada nodo en la red tiene una identificación única y se comunica con otros nodos para mantener la consistencia de los datos y el enrutamiento dentro del anillo Chord.
+
+### Componentes Técnicos
+- **Nodo P2P:**
+
+   Funcionalidad: Implementa la lógica de conexión, almacenamiento y recuperación de datos. Mantiene una tabla de enrutamiento para localizar otros nodos y gestionar la tabla de hash distribuida (DHT).
+   Lenguaje/Framework: Dependiendo de la implementación, puede estar basado en Python, Java, C++, etc., con uso de bibliotecas para redes y serialización de datos.
+   Chord Ring:
+   
+   Funcionalidad: Protocolo para la organización de nodos en un anillo circular. Facilita el enrutamiento y la búsqueda eficiente de nodos responsables de ciertas claves.
+   DHT (Distributed Hash Table):
+   
+   Funcionalidad: Mecanismo para almacenar y recuperar pares clave-valor en la red. Asegura que cada clave sea gestionada por un nodo específico.
+
+
+## Configuración de parámetros
+
+La configuración del sistema se maneja a través del archivo ```config.py```, que define varios parámetros esenciales para la operación del nodo. A continuación se detalla cada parámetro y su función:
+
+```
+# Dirección IP y puerto del nodo
+SOURCE_ADDRESS = ""  # IP del nodo actual. Ejemplo: "192.168.1.100"
+TARGET_ADDRESS = ""  # IP del nodo objetivo al que se conectará (en nodos de bootstrap).
+NODE_ID = 0          # Identificador único del nodo en el anillo Chord. Debe ser un entero único.
+PORT = "[::]:50051"  # Puerto en el que el nodo escuchará conexiones entrantes. El formato "[::]:50051" indica que acepta conexiones en todas las interfaces IPv6 en el puerto 50051.
+
+```
+
+### Parámetros a Configurar:
+1. **SOURCE_ADDRESS:**
+
+   Descripción: Especifica la dirección IP del nodo actual. Esta IP debe ser accesible para otros nodos en la red para permitir la comunicación. Si el nodo tiene una IP dinámica, asegúrate de actualizar esta dirección antes de iniciar el nodo.
+   Ejemplo: "192.168.1.100"
+
+2. **TARGET_ADDRESS:**
+
+   Descripción: La IP del nodo al que se debe conectar inicialmente. Este parámetro se utiliza para conectarse a un nodo existente en la red y formar parte del anillo Chord. En un entorno de producción, esto podría ser un nodo de bootstrap conocido.
+   Ejemplo: "192.168.1.101"
+
+3. **NODE_ID:**
+
+   Descripción: Identificador único del nodo en el anillo Chord. Este valor debe ser un entero único en el rango permitido para el sistema y se utiliza para organizar el nodo dentro del anillo y gestionar la asignación de claves.
+   Ejemplo: 1
+   
+4. **PORT:**
+   
+   Descripción: El puerto en el que el nodo escuchará las solicitudes entrantes. El formato [::]:50051 indica que el nodo acepta conexiones en todas las interfaces de red (IPv6) en el puerto 50051. Para redes IPv4, podrías usar 0.0.0.0:50051.
+   Ejemplo: "[::]:50051"
+
+## Detalles de la organización del código por carpetas.
 La estructura del proyecto está organizada de manera que cada componente tiene un propósito específico en la implementación del DHT de Chord. A continuación se detalla la organización de directorios y la función de cada archivo.
 
 ```
@@ -367,19 +422,8 @@ peer.py
    - Función : Generado automáticamente a partir de chord.proto, contiene las definiciones de los stubs y servicios gRPC para la comunicación entre nodos.
      
 
-## opcionalmente - si quiere mostrar resultados o pantallazos 
-
 # 4. Descripción del ambiente de EJECUCIÓN (en producción) lenguaje de programación, librerias, paquetes, etc, con sus numeros de versiones.
 
-# IP o nombres de dominio en nube o en la máquina servidor.
-
-## descripción y como se configura los parámetros del proyecto (ej: ip, puertos, conexión a bases de datos, variables de ambiente, parámetros, etc)
-
-## como se lanza el servidor.
-
-## una mini guia de como un usuario utilizaría el software o la aplicación
-
-## opcionalmente - si quiere mostrar resultados o pantallazos 
 ### Demostracion AWS
 ![image](https://github.com/user-attachments/assets/6a1bb50e-7e43-4469-b452-841f5d163590)
 ![image](https://github.com/user-attachments/assets/1a4fb743-efaf-4060-a576-8a875d34212c)
