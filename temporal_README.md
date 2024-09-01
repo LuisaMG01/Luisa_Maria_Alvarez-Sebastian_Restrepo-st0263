@@ -61,7 +61,7 @@ Para el presente reto se implemento una red P2P mediante el protocolo Chord DHT.
 
 ## 1.2. Que aspectos NO cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
-## 2. información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
+## 2. Información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
 
 #### Arquitectura DHT
 Chord es un protocolo de red Peer-to-Peer (P2P) diseñado para facilitar la localización eficiente de datos en una red distribuida. Este protocolo implementa una Distributed Hash Table (DHT), que permite almacenar y recuperar datos sin necesidad de un servidor central. Chord es fundamental en sistemas distribuidos donde la escalabilidad y la robustez son esenciales, ya que permite la distribución y gestión de grandes volúmenes de datos como archivos entre múltiples nodos de manera descentralizada.
@@ -83,6 +83,8 @@ Unión y Salida de Nodos: Cuando un nodo se une a la red, Chord redistribuye las
 
 #### Manejo de Fallas
 Chord maneja fallos mediante la replicación de claves en múltiples nodos sucesores, asegurando que, en caso de fallo de un nodo, los datos aún estén accesibles en la red. Además, los nodos supervisan a sus vecinos para detectar fallos y actualizar sus tablas de enrutamiento, lo que permite que la red continúe operando normalmente a pesar de la falla de algunos nodos.
+
+![image](https://github.com/user-attachments/assets/ec2e5b4c-9e9b-4ef5-ae84-9faedaf4d83a)
 
 
 ### Diagrama de Secuencias
