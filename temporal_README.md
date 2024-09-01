@@ -171,27 +171,22 @@ Este comando generará los archivos `chord_pb2.py` y `chord_pb2_grpc.py`.
 
 ### Ejecución del Proyecto
 
+
+Antes de realizar la ejecución del proyecto es importante realizar previamente la configuración del archivo config.py en el que se establece la configuración previa de cada uno de los nodos.
+
+Aquí está un ejemplo de config.py y peer.py con correcciones sugeridas:
+```
+SOURCE_ADDRESS = "127.0.0.1:50051"  # IP para pruebas locales
+TARGET_ADDRESS = ""  # Deja vacío si es el primer nodo
+NODE_ID = 0
+PORT = "127.0.0.1:50051"  # Dirección y puerto para IPv4
+```
 Para ejecutar un nodo Chord:
 
 ```
-python server.py <node_id> <server_address> <join_address>
+python peer.py
 ```
-
-Donde:
-- `<node_id>`: Es un número entero que identifica al nodo.
-- `<server_address>`: Es la dirección IP y puerto donde el nodo escuchará (ej. "localhost:50051").
-- `<join_address>`: Es la dirección de un nodo existente para unirse a la red. Use "none" para iniciar una nueva red.
-
-Ejemplos:
-
-1. Iniciar el primer nodo (nueva red):
-   ```
-   python server.py 0 localhost:50051 none
-   ```
-2. Unir un segundo nodo a la red existente:
-  ```
-   python server.py 1 localhost:50052 localhost:50051
-  ```
+Recordar realizar la modificación del archivo de configuración cada vez, antes de ejecutar y agregar un nodo en la red.
 
 ### Ejecución con Docker
 
@@ -345,8 +340,8 @@ La configuración del sistema se maneja a través del archivo ```config.py```, q
 
 ```
 # Dirección IP y puerto del nodo
-SOURCE_ADDRESS = ""  # IP del nodo actual. Ejemplo: "192.168.1.100"
-TARGET_ADDRESS = ""  # IP del nodo objetivo al que se conectará (en nodos de bootstrap).
+SOURCE_ADDRESS = ""  # IP del nodo actual con su puerto. Ejemplo: "192.168.1.100:5001"
+TARGET_ADDRESS = ""  # IP del nodo objetivo al que se conectará (en nodos de bootstrap) con su puerto.
 NODE_ID = 0          # Identificador único del nodo en el anillo Chord. Debe ser un entero único.
 PORT = "[::]:50051"  # Puerto en el que el nodo escuchará conexiones entrantes. El formato "[::]:50051" indica que acepta conexiones en todas las interfaces IPv6 en el puerto 50051.
 
@@ -432,12 +427,21 @@ peer.py
 
 # 5. otra información que considere relevante para esta actividad.
 
-# referencias:
-<debemos siempre reconocer los créditos de partes del código que reutilizaremos, así como referencias a youtube, o referencias bibliográficas utilizadas para desarrollar el proyecto o la actividad>
-## sitio1-url 
-## sitio2-url
-## url de donde tomo info para desarrollar este proyecto
+### Demostración en local
 
+![image](https://github.com/user-attachments/assets/288893f8-0a99-4f82-8511-136be67511ac)
+![image](https://github.com/user-attachments/assets/f8408ee4-add1-4a08-a21b-4d3f83606efb)
+![image](https://github.com/user-attachments/assets/f1cd096f-3e93-4736-9dfe-ef2415c40759)
+
+
+# 6. Video sustentación del proyecto 
+
+- **Video**: [https://www.youtube.com/watch?v=D_3f1Xvwgyw](https://www.youtube.com/watch?v=D_3f1Xvwgyw)
+
+# referencias:
+
+- Chord (no date) PyPI. Available at: https://pypi.org/project/chord/ (Accessed: 01 September 2024). 
+- Basics tutorial (2024) gRPC. Available at: https://grpc.io/docs/languages/python/basics/ (Accessed: 01 September 2024). 
 
 
 
