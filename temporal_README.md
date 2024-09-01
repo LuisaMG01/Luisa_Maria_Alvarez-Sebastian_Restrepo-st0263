@@ -62,6 +62,29 @@ Para el presente reto se implemento una red P2P mediante el protocolo Chord DHT.
 ## 1.2. Que aspectos NO cumplió o desarrolló de la actividad propuesta por el profesor (requerimientos funcionales y no funcionales)
 
 ## 2. información general de diseño de alto nivel, arquitectura, patrones, mejores prácticas utilizadas.
+
+#### Arquitectura DHT
+Chord es un protocolo de red Peer-to-Peer (P2P) diseñado para facilitar la localización eficiente de datos en una red distribuida. Este protocolo implementa una Distributed Hash Table (DHT), que permite almacenar y recuperar datos sin necesidad de un servidor central. Chord es fundamental en sistemas distribuidos donde la escalabilidad y la robustez son esenciales, ya que permite la distribución y gestión de grandes volúmenes de datos como archivos entre múltiples nodos de manera descentralizada.
+
+#### Estructura de la red
+En Chord, los nodos están organizados en un anillo lógico, donde cada nodo es responsable de un segmento del espacio de claves. El espacio de claves es un rango de identificadores generados por una función hash, como SHA-1, que distribuye tanto los nodos como los datos en un espacio de identificadores de tamaño fijo, normalmente de $2^m$, donde m es el número de bits utilizados por la función hash. Cada clave se almacena en el primer nodo cuyo identificador es igual o superior al identificador de la clave, garantizando una distribución equitativa de los datos en la red.
+
+#### Mecanismo de Busqueda
+El proceso de búsqueda en Chord se realiza utilizando un algoritmo de búsqueda que, en promedio, encuentra el nodo responsable de una clave en O(log N) saltos, donde N es el número total de nodos en la red. Para mejorar la eficiencia de la búsqueda, cada nodo mantiene una tabla de enrutamiento llamada "Finger Table", que contiene hasta m entradas, apuntando cada una a un nodo a una distancia de potencia de dos en el anillo. Esta tabla permite que la búsqueda se realice en una cantidad de saltos logarítmica con respecto al tamaño de la red.
+
+#### Operaciones Basicas
+Las operaciones principales en Chord son la inserción y recuperación de datos, así como la gestión de la unión y salida de nodos en la red:
+
+Inserción de Datos: Un nodo que desee insertar un dato en la DHT primero calcula el identificador de la clave del dato utilizando la función hash. Luego, localiza el nodo correspondiente en el anillo y almacena el dato en dicho nodo.
+
+Recuperación de Datos: Para recuperar un dato, se realiza una búsqueda similar, utilizando el algoritmo de lookup para localizar el nodo que almacena la clave del dato solicitado.
+
+Unión y Salida de Nodos: Cuando un nodo se une a la red, Chord redistribuye las claves que estaban asignadas a otros nodos para mantener el equilibrio en la red. De manera similar, cuando un nodo sale de la red, sus claves se reasignan a su sucesor, y las tablas de enrutamiento de los nodos afectados se actualizan en consecuencia.
+
+#### Manejo de Fallas
+Chord maneja fallos mediante la replicación de claves en múltiples nodos sucesores, asegurando que, en caso de fallo de un nodo, los datos aún estén accesibles en la red. Además, los nodos supervisan a sus vecinos para detectar fallos y actualizar sus tablas de enrutamiento, lo que permite que la red continúe operando normalmente a pesar de la falla de algunos nodos.
+
+
 ### Diagrama de Secuencias
 ![Diagrama de Secuencias Chord DHT](https://www.planttext.com/api/plantuml/png/fLPDRzim3BtxLn0znK3MxLmWGu6Y6J84sT2ikmn3eCPq8yILF4bEb_twKVANP2UEr_MGHZJvI3u-qRdLXYbJl6GHsngfu56ZYd8oyItFcJ1mjP89NW7JOB-4Z-vsKYMmHdNWszB7MIf3wBikjblKcb8qW8sfZ_nLOO9TVy_e8gBPp3s4EuNCS2c0YGG-IowuU0QpGrYXUPLg3xDP5DdEuDt7Ck86rhRlyZ0HzBdXoHHOaYZ2tvWTrnjhRKsIy9IpnP6BQg4MWXlEClw7e3oKAQHK1mKPzfGHKjwMFmLTznv7B3EmIA4gWcg53n7GNoUBxQjfQBAIWWh1J6FW6r3Q2vfpaJGU3_YhG6seubcLEeuTLeX1eFvG2JD06GiQO9merFvRY5Jw19ufPp02HJ8mdhaR27op0nbmyuJsladlv4QgUUBaKyhDokeSyxKdQU8J6WynZYuH7Fh3vFubDySu6asX9pIdQl_S47MHrb4evxfVISFJevLfXTPSCVUbZh_CnMYWI-mu4jqC7r3BGf7NbnoL6wG-lI2amjPviiVZ50uiA_eBeEEwb5kMPLIq9ZjxnXyK-XDcTR1ttu5heFfpAe6J926bSTkzHG6dLa2P9olXBr_-kLIlp2ve6rRTJ9Zu9x-fSPU_Ygv96GORDnDxPRlaBwNS5td8Ve_soibje1ORP0hE-mqykofkAAqfb83ljfLcYjVFw5gCHwpTclcomeRwu5XXZI6zZgl9E8TpYUy6nnA1aqgFGqlsVCG0PUL4wQOjaHr6l8hlVtDJFm-cjgENlhTsWhoT7mC4yvWdpA0dX7PfD6zRjpdQKxi-B7GNiZ-8CiNRCtG7r6-YlH9T8XhCGULL90JlZtzQwUCKMQRvtopZzqD7RQkQb0nJu-GbAlb4j-HkVyx-1G00)
 
